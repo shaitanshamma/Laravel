@@ -17,8 +17,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/info/{news}', function ($news){
-    return 'This is a new ' . $news;
+Route::get('/info', function (){
+    $news = `<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum fugiat natus nesciunt numquam odio placeat possimus provident reiciendis tempora veniam. Accusamus commodi consequatur cum debitis deserunt, expedita maxime natus nobis, nulla, quaerat suscipit tempora. Dolor ducimus exercitationem nihil officia quia?</p>
+`;
+    return view('info', ['news' => $news]);
 });
 
-Route::get('/info', fn() => 'This is a new ');
+Route::get('/about', fn() => 'This is about page');
