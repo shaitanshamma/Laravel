@@ -1,6 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use \App\Http\Controllers\HomeController;
+use \App\Http\Controllers\NewsController;
+use \App\Http\Controllers\Admin\CategoriesController as AdminCategoriesController;
+use \App\Http\Controllers\Admin\NewsController as AdminNewsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -13,14 +17,19 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
 
-Route::get('/info', function (){
-    $news = `<p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Dolorum fugiat natus nesciunt numquam odio placeat possimus provident reiciendis tempora veniam. Accusamus commodi consequatur cum debitis deserunt, expedita maxime natus nobis, nulla, quaerat suscipit tempora. Dolor ducimus exercitationem nihil officia quia?</p>
-`;
-    return view('info', ['news' => $news]);
-});
+/*news*/
 
-Route::get('/about', fn() => 'This is about page');
+Route::get('/', [HomeController::class, 'index'])->name('index');
+
+Route::get('/news', [NewsController::class, 'news'])->name('news');
+
+Route::get('/news/{id}', [NewsController::class, 'showNews'])->name('news.show')->where('id', '\d+');
+
+
+/*admin*/
+
+Route::group(['as' => 'admin.', 'prefix' => 'admin'], function () {
+    Route::resource('/categories', AdminCategoriesController::class);
+    Route::resource('/news', AdminNewsController::class);
+});
