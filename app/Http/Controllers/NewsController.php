@@ -10,7 +10,7 @@ class NewsController extends Controller
     public function news()
     {
         $news = $this->getNews();
-        return view('/news/news', ['newsList'=>$news]);
+        return view('/news/index', ['newsList'=>$news]);
     }
 
     public function showNews(int $id)

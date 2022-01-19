@@ -14,7 +14,7 @@ class NewsController extends Controller
      */
     public function index()
     {
-        return 'Тут будут админские новости';
+        return view('layouts/admin/admin');
     }
 
     /**

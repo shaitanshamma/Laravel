@@ -15,7 +15,7 @@ class CategoriesController extends Controller
     public function index()
     {
         $categories = $this->getCategories();
-        return view('admin/categories', ['categoryList' => $categories]);
+        return view('admin/categories/index', ['categoryList' => $categories]);
     }
 
     /**
