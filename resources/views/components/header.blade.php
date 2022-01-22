@@ -12,6 +12,32 @@
                         <li><a href="#" class="text-white">Follow on Twitter</a></li>
                         <li><a href="#" class="text-white">Like on Facebook</a></li>
                         <li><a href="#" class="text-white">Email me</a></li>
+                        <li><a href="{{route('admin.index')}}" class="text-white">ADMIN</a></li>
+                        <li><a href="{{route('admin.index')}}" class="text-white">
+                                <div>
+                                    <form method="post" action="{{ route('admin.categories.store') }}">
+                                        @csrf
+                                        <div class="form-group">
+                                            <label for="name">Ваше имя</label>
+                                            <input type="text" class="form-control" id="name" name="name" required>
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="phone">Номер телефона</label>
+                                            <input type="text" class="form-control" name="phone" id="phone">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="email">Email</label>
+                                            <input type="email" class="form-control" name="email" id="email">
+                                        </div>
+                                        <div class="form-group">
+                                            <label for="newsToFind">Что ищем?</label>
+                                            <textarea class="form-control" name="newsToFind" id="newsToFind"></textarea>
+                                        </div>
+                                        <br>
+                                        <button type="submit" class="btn btn-success" style="float: right;">Найти</button>
+                                    </form>
+                                </div>
+                            </a></li>
                     </ul>
                 </div>
             </div>

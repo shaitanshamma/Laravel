@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.admin.admin')
 @section('title') Список новостей @endsection
 @section('header')
     <h1 class="h2">Список новостей</h1>
@@ -7,10 +7,10 @@
             <a href="{{ route('admin.news.create') }}"
                type="button" class="btn btn-sm btn-outline-secondary">Добавить новость</a>
         </div>
-
     </div>
 @endsection
 @section('content')
     <div class="table-responsive">
     </div>
 @endsection
+
