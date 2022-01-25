@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers\Admin;
+namespace Http\Controllers\Admin;
 
-use App\Http\Controllers\Controller;
+use Http\Controllers\Controller;
+use App\Models\Category;
 use Illuminate\Http\Request;
 
 class CategoriesController extends Controller
@@ -14,7 +15,10 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = $this->getCategories();
+        $categories = new Category();
+
+        $categories = $categories->getCategories();
+
         return view('admin/categories/index', ['categoryList' => $categories]);
     }
 

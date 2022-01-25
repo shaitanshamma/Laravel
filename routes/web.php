@@ -1,10 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use \App\Http\Controllers\HomeController;
-use \App\Http\Controllers\NewsController;
-use \App\Http\Controllers\Admin\CategoriesController as AdminCategoriesController;
-use \App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use Http\Controllers\HomeController;
+use Http\Controllers\NewsController;
+use Http\Controllers\Admin\CategoriesController as AdminCategoriesController;
+use Http\Controllers\Admin\NewsController as AdminNewsController;
 
 /*
 |--------------------------------------------------------------------------
