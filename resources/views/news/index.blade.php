@@ -34,7 +34,8 @@
                         <div>Автор: {{ $newsItem->author_id }}</div>
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <a href={{ route('news.show', ['id' => $newsItem->id]) }} type="button" class="btn btn-sm btn-outline-secondary">Смотреть подробнее
+                                <a href={{ route('news.show', ['id' => $newsItem->id]) }} type="button"
+                                   class="btn btn-sm btn-outline-secondary">Смотреть подробнее
                                 </a>
                             </div>
 
@@ -43,9 +44,9 @@
                     </div>
                 </div>
             </div>
-
         @empty
             <h1>Новостей нет</h1>
         @endforelse
     </div>
+            {{ $newsList->links() }}
 @endsection

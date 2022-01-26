@@ -14,7 +14,7 @@ class News extends Model
 
     public function getNews()
     {
-       return DB::table($this->table)->select()->get();
+       return DB::table($this->table)->paginate(3);
     }
 
     public function getNewsById(int $id)
