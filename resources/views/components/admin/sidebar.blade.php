@@ -15,8 +15,20 @@
             </li>
             <li class="nav-item">
                 <a class="nav-link @if(request()->routeIs('admin.categories.*')) active @endif" href="{{ route('admin.categories.index') }}">
-                    <span data-feather="file"></span>
+                    <span data-feather="list"></span>
                     Категории
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @if(request()->routeIs('admin.authors.*')) active @endif" href="{{ route('admin.authors.index') }}">
+                    <span data-feather="user"></span>
+                    Авторы
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @if(request()->routeIs('admin.sources.*')) active @endif" href="{{ route('admin.sources.index') }}">
+                    <span data-feather="upload"></span>
+                    Источники
                 </a>
             </li>
 

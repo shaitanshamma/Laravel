@@ -3,15 +3,11 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
-
 use App\Models\Author;
-use App\Models\Category;
-use App\Models\NewsSource;
 use Illuminate\Http\Request;
 
-class CategoriesController extends Controller
+class AuthorController extends Controller
 {
-
     /**
      * Display a listing of the resource.
      *
@@ -19,9 +15,9 @@ class CategoriesController extends Controller
      */
     public function index()
     {
-        $categories = Category::all();
+        $authors = Author::all();
 
-        return view('admin.categories.index', ['categories' => $categories]);
+        return view('admin.authors.index', ['authors' => $authors]);
     }
 
     /**
@@ -31,36 +27,30 @@ class CategoriesController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
-        $sources = NewsSource::all();
-        $authors = Author::all();
-
-        return view('admin.categories.create', [
-            'categories' => $categories,
-            'sources'=> $sources,
-            'authors'=>$authors
-        ]);
+        return view('admin.authors.create');
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(Request $request)
     {
         $request->validate([
-            'title' => ['required', 'string', 'min:5']
+            'name' => ['required', 'string', 'min:2'],
+            'lastname' => ['required', 'string', 'min:2'],
+            'email' => ['required', 'string', 'min:5'],
         ]);
 
-        $data = $request->only(['title']);
+        $data = $request->only(['name', 'lastname', 'email']);
 
-        $created = Category::query()->create($data);
+        $created = Author::query()->create($data);
 
         if($created) {
 
-            return redirect()->route('admin.categories.index')
+            return redirect()->route('admin.authors.index')
                 ->with('success', 'Запись успешно добавлена');
         }
 
@@ -71,7 +61,7 @@ class CategoriesController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param int $id
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -82,13 +72,13 @@ class CategoriesController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param Category $category
-     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|void
+     * @param Author $author
+     * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
-    public function edit(Category $category)
+    public function edit(Author $author)
     {
-        return view('admin.categories.edit', [
-            'category' => $category,
+        return view('admin.authors.edit', [
+            'author' =>$author ,
         ]);
     }
 
@@ -96,24 +86,25 @@ class CategoriesController extends Controller
      * Update the specified resource in storage.
      *
      * @param \Illuminate\Http\Request $request
-     * @param Category $category
+     * @param Author $author
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Category $category)
+    public function update(Request $request, Author $author)
     {
-
         $request->validate([
-            'title' => ['required', 'string', 'min:5']
+            'name' => ['required', 'string', 'min:2'],
+            'lastname' => ['required', 'string', 'min:2'],
+            'email' => ['required', 'string', 'min:5'],
         ]);
 
-        $data = $request->only(['title']);
+        $data = $request->only(['name', 'lastname', 'email']);
 
 
-        $updated = $category->fill($data)->save();
+        $updated = $author->fill($data)->save();
 
         if($updated) {
 
-            return redirect()->route('admin.categories.index')
+            return redirect()->route('admin.authors.index')
                 ->with('success', 'Запись успешно обновлена');
         }
 
@@ -124,15 +115,11 @@ class CategoriesController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param Category $category
-     * @return void
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
      */
-    public function destroy(Category $category)
+    public function destroy($id)
     {
-
-        $category->delete();
-
-        return redirect()->route('admin.categories.index')
-            ->with('success', 'Запись успешно удалена');
+        //
     }
 }

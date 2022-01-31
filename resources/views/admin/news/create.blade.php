@@ -9,21 +9,37 @@
     </div>
 @endsection
 @section('content')
-    @if($errors->any())
-        @foreach($errors->all() as $error)
-            <x-alert type="danger" :message="$error"></x-alert>
-        @endforeach
-    @endif
+    @include('inc.message')
     <div>
         <form method="post" action="{{ route('admin.news.store') }}">
             @csrf
             <div class="form-group">
-                <label for="title">Наименование</label>
-                <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}">
+                <label for="categories">Выбрать категории</label>
+                <select class="form-control" name="categories[]" id="categories"  multiple>
+                    @foreach($categories as $category)
+                        <option value="{{ $category->id }}">{{ $category->title }}</option>
+                    @endforeach
+                </select>
             </div>
             <div class="form-group">
-                <label for="author">Автор</label>
-                <input type="text" class="form-control" id="author" name="author" value="{{ old('author') }}">
+                <label for="categories">Выбрать автора</label>
+                <select class="form-control" name="author_id" id="author_id"  >
+                    @foreach($authors as $author)
+                        <option value="{{ $author->id }}">{{ $author->name }} {{ $author->lastname }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="categories">Выбрать источник</label>
+                <select class="form-control" name="source_id" id="source_id" >
+                    @foreach($sources as $source)
+                        <option value="{{ $source->id }}">{{ $source->title }}</option>
+                    @endforeach
+                </select>
+            </div>
+            <div class="form-group">
+                <label for="title">Наименование</label>
+                <input type="text" class="form-control" id="title" name="title" value="{{ old('title') }}">
             </div>
             <div class="form-group">
                 <label for="status">Статус</label>
@@ -36,6 +52,10 @@
             <div class="form-group">
                 <label for="description">Описание</label>
                 <textarea class="form-control" name="description" id="description">{!! old('description') !!}</textarea>
+            </div>
+            <div class="form-group">
+                <label for="img">Изображение</label>
+                <input class="form-control" name="img" id="img">{!! old('img') !!}
             </div>
             <br>
             <button type="submit" class="btn btn-success" style="float: right;">Сохранить</button>

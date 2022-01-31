@@ -31,16 +31,21 @@
                             </strong>
                         </div>
                         <p class="card-text">{!! $newsItem->description !!}</p>
-                        <div>Автор: {{ $newsItem->author_id }}</div>
+                        <div>Автор: {{ $newsItem->author->lastname }}</div>
+                        @foreach($newsItem->category as $category)
+                            <small class="text-muted">{{ $category->title }}</small>
+                        @endforeach
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
                                 <a href={{ route('news.show', ['id' => $newsItem->id]) }} type="button"
                                    class="btn btn-sm btn-outline-secondary">Смотреть подробнее
                                 </a>
                             </div>
-
                             <small class="text-muted">{{ $newsItem->created_at }}</small>
                         </div>
+                        <a href={{ $newsItem->newsSource->path }} type="button"
+                           class="link-dark">Источник: {{ $newsItem->newsSource->title }}
+                        </a>
                     </div>
                 </div>
             </div>

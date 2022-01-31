@@ -12,11 +12,12 @@
 @section('content')
     @include('inc.message')
     <div>
-        <form method="post" action="{{ route('admin.categories.store') }}">
+        <form method="post" action="{{ route('admin.categories.update', ['category'=>$category]) }}">
             @csrf
+            @method('put')
             <div class="form-group">
                 <label for="title">Наименование категории</label>
-                <input type="text" class="form-control" id="title" name="title" required>
+                <input type="text" class="form-control" id="title" name="title" required value="{{ $category->title }}">
             </div>
             <br>
             <button type="submit" class="btn btn-success" style="float: right;">Сохранить</button>

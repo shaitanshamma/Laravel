@@ -10,7 +10,51 @@
     </div>
 @endsection
 @section('content')
+    @include('inc.message')
     <div class="table-responsive">
+        <table class="table">
+            <thead>
+            <tr>
+                <th scope="col">Id</th>
+                <th scope="col">Title</th>
+                <th scope="col">Description</th>
+                <th scope="col">Img</th>
+                <th scope="col">Category</th>
+                <th scope="col">Status</th>
+                <th scope="col">Source</th>
+                <th scope="col">Author</th>
+                <th scope="col">Created at</th>
+                <th scope="col">Updated at</th>
+                <th scope="col">Operations</th>
+            </tr>
+            </thead>
+            <tbody>
+            @forelse($news as $newsItem)
+                <tr>
+                    <td>{{ $newsItem->id }}</td>
+                    <td>{{ $newsItem->title }}</td>
+                    <td style="max-width: 20vw ">{{ $newsItem->description }}</td>
+                    <td>{{ $newsItem->img }}</td>
+                    <td>
+                        @foreach($newsItem->category as $cat)
+                            <p>{{ $cat->title }}</p>
+                        @endforeach
+                    </td>
+                    <td>{{ $newsItem->status }}</td>
+                    <td>{{ $newsItem->newsSource->title }}</td>
+                    <td>{{ $newsItem->author->name }} {{ $newsItem->author->lastname }}</td>
+                    <td>{{ $newsItem->created_at }}</td>
+                    <td>{{ $newsItem->updated_at }}</td>
+                    <td>
+                        <a href=" {{ route('admin.news.edit', ['news' => $newsItem]) }}" type="button" class="btn btn-success">Изменить</a>
+                        <a href="" type="button" class="btn btn-danger">Удалить</a>
+                    </td>
+                </tr>
+            @empty
+                <h1>Новостей нет</h1>
+            @endforelse
+            </tbody>
+        </table>
     </div>
 @endsection
 

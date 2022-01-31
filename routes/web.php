@@ -5,6 +5,9 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\NewsController;
 use App\Http\Controllers\Admin\CategoriesController as AdminCategoriesController;
 use App\Http\Controllers\Admin\NewsController as AdminNewsController;
+use \App\Http\Controllers\Admin\NewsSourceController as AdminNewsSourceController;
+use \App\Http\Controllers\Admin\AuthorController as AdminAuthorsController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -32,5 +35,7 @@ Route::get('/news/{id}', [NewsController::class, 'showNews'])->name('news.show')
 Route::group(['as' => 'admin.', 'prefix' => 'admin'], function () {
     Route::resource('/categories', AdminCategoriesController::class);
     Route::resource('/news', AdminNewsController::class);
+    Route::resource('/sources', AdminNewsSourceController::class);
+    Route::resource('/authors', AdminAuthorsController::class);
     Route::view('/', 'admin.index')->name('index');
 });

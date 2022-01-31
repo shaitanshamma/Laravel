@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Support\Facades\DB;
 
 class News extends Model
@@ -12,13 +13,27 @@ class News extends Model
 
     protected $table = 'news';
 
-    public function getNews()
+    protected $fillable = [
+        'title',
+        'description',
+        'source_id',
+        'author_id',
+        'img',
+        'status'
+    ];
+
+    public function author()
     {
-       return DB::table($this->table)->paginate(3);
+        return $this->belongsTo(Author::class, 'author_id');
     }
 
-    public function getNewsById(int $id)
+    public function category()
     {
-        return DB::table($this->table)->find($id);
+        return $this->belongsToMany(Category::class, 'news_with_categories');
+    }
+
+    public function newsSource()
+    {
+        return $this->belongsTo(NewsSource::class, 'source_id');
     }
 }

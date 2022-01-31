@@ -9,15 +9,17 @@ class NewsController extends Controller
 
     public function news()
     {
-        $newsModel = new News();
-        $news = $newsModel->getNews();
+
+        $news = News::with('author')->with('category')->with('newsSource')->paginate(3);
+
         return view('/news/index', ['newsList' => $news]);
     }
 
     public function showNews(int $id)
     {
-        $newsModel = new News();
-        $news = $newsModel->getNewsById($id);
+        $news = News::query()->find($id);
+
         return view('/news/customNews', ['news' => $news]);
     }
+
 }
