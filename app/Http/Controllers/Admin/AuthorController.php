@@ -115,11 +115,17 @@ class AuthorController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param Author $author
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy(Author $author)
     {
-        //
+//        dd($author);
+        try{
+            $author->delete();
+            return response()->json('ok');
+        }catch(\Exception $e) {
+            \Log::error("Error delete news item");
+        }
     }
 }

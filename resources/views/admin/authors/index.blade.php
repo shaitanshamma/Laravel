@@ -35,7 +35,7 @@
                 <td>{{ $author->updated_at }}</td>
                 <td>
                     <a href=" {{ route('admin.authors.edit', ['author' => $author]) }}" type="button" class="btn btn-success">Изменить</a>
-                    <a href="{{ route('admin.authors.destroy', ['author' => $author]) }}" type="button" class="btn btn-danger">Удалить</a>
+                    <a href="javascript:;" rel="{{ $author->id }}" type="button" class="btn btn-danger delete">Удалить</a>
                 </td>
             </tr>
         @empty
@@ -44,3 +44,34 @@
         </tbody>
     </table>
 @endsection
+
+@push('js')
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            const el = document.querySelectorAll('.delete');
+            el.forEach(function (e, k) {
+                e.addEventListener('click', function() {
+                    const id = e.getAttribute("rel");
+                    if (confirm(`Вы действительно хотите удалить автора с ID = ${id}?`)) {
+                        send('/admin/authors/' + id).then(() => {
+                            location.reload();
+                        });
+                    }
+                });
+            });
+        });
+
+        async function send(url) {
+            let response = await fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            });
+
+            let result = await response.json();
+            console.log(result)
+            return result.ok;
+        }
+    </script>
+@endpush

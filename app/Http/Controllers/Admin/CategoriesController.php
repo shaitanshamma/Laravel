@@ -125,14 +125,15 @@ class CategoriesController extends Controller
      * Remove the specified resource from storage.
      *
      * @param Category $category
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(Category $category)
     {
-
-        $category->delete();
-
-        return redirect()->route('admin.categories.index')
-            ->with('success', 'Запись успешно удалена');
+        try{
+            $category->delete();
+            return response()->json('ok');
+        }catch(\Exception $e) {
+            \Log::error("Error delete news item");
+        }
     }
 }

@@ -47,7 +47,7 @@
                     <td>{{ $newsItem->updated_at }}</td>
                     <td>
                         <a href=" {{ route('admin.news.edit', ['news' => $newsItem]) }}" type="button" class="btn btn-success">Изменить</a>
-                        <a href="" type="button" class="btn btn-danger">Удалить</a>
+                        <a href="javascript:;" rel="{{ $newsItem->id }}" type="button" class="btn btn-danger delete">Удалить</a>
                     </td>
                 </tr>
             @empty
@@ -57,4 +57,35 @@
         </table>
     </div>
 @endsection
+
+@push('js')
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            const el = document.querySelectorAll('.delete');
+            el.forEach(function (e, k) {
+                e.addEventListener('click', function() {
+                    const id = e.getAttribute("rel");
+                    if (confirm(`Вы действительно хотите удалить новость с ID = ${id}?`)) {
+                        send('/admin/news/' + id).then(() => {
+                            location.reload();
+                        });
+                    }
+                });
+            });
+        });
+
+        async function send(url) {
+            let response = await fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            });
+
+            let result = await response.json();
+            console.log(result)
+            return result.ok;
+        }
+    </script>
+@endpush
 

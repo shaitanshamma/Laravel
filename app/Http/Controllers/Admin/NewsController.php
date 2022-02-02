@@ -165,11 +165,16 @@ class NewsController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+     * @param News $news
+     * @return \Illuminate\Http\JsonResponse
      */
-    public function destroy($id)
+    public function destroy(News $news)
     {
-        //
+        try{
+            $news->delete();
+            return response()->json('ok');
+        }catch(\Exception $e) {
+            \Log::error("Error delete news item");
+        }
     }
 }

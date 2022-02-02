@@ -124,10 +124,15 @@ class NewsSourceController extends Controller
      * Remove the specified resource from storage.
      *
      * @param NewsSource $source
-     * @return void
+     * @return \Illuminate\Http\JsonResponse
      */
     public function destroy(NewsSource $source)
     {
-        //
+        try{
+            $source->delete();
+            return response()->json('ok');
+        }catch(\Exception $e) {
+            \Log::error("Error delete news item");
+        }
     }
 }

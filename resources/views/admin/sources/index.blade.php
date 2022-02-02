@@ -33,7 +33,7 @@
                 <td>{{ $source->updated_at }}</td>
                 <td>
                     <a href=" {{ route('admin.sources.edit', ['source' => $source]) }}" type="button" class="btn btn-success">Изменить</a>
-                    <a href="{{ route('admin.sources.destroy', ['source' => $source]) }}" type="button" class="btn btn-danger">Удалить</a>
+                    <a href="javascript:;" rel="{{ $source->id }}" type="button" class="btn btn-danger delete">Удалить</a>
                 </td>
             </tr>
         @empty
@@ -42,3 +42,34 @@
         </tbody>
     </table>
 @endsection
+
+@push('js')
+    <script type="text/javascript">
+        document.addEventListener("DOMContentLoaded", function() {
+            const el = document.querySelectorAll('.delete');
+            el.forEach(function (e, k) {
+                e.addEventListener('click', function() {
+                    const id = e.getAttribute("rel");
+                    if (confirm(`Вы действительно хотите удалить источник с ID = ${id}?`)) {
+                        send('/admin/sources/' + id).then(() => {
+                            location.reload();
+                        });
+                    }
+                });
+            });
+        });
+
+        async function send(url) {
+            let response = await fetch(url, {
+                method: 'DELETE',
+                headers: {
+                    'X-CSRF-TOKEN': document.querySelector('meta[name="csrf-token"]').getAttribute('content')
+                }
+            });
+
+            let result = await response.json();
+            console.log(result)
+            return result.ok;
+        }
+    </script>
+@endpush
