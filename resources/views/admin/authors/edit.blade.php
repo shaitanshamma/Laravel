@@ -10,17 +10,23 @@
     </div>
 @endsection
 @section('content')
-    @include('inc.message')
+{{--    @include('inc.message')--}}
     <div>
         <form method="post" action="{{ route('admin.authors.update', ['author'=>$author]) }}">
             @csrf
             @method('put')
             <div class="form-group">
-                <label for="name">Имя</label>
+                <label for="name">Имя
+                    @error('name') <strong style="color:red;">{{ $message }}</strong> @enderror
+                </label>
                 <input type="text" class="form-control" id="name" name="name" required value="{{ $author->name }}">
-                <label for="lastname">Фамилия</label>
+                <label for="lastname">Фамилия
+                    @error('lastname') <strong style="color:red;">{{ $message }}</strong> @enderror
+                </label>
                 <input type="text" class="form-control" id="lastname" name="lastname" required value="{{ $author->lastname }}">
-                <label for="email">Email</label>
+                <label for="email">Email
+                    @error('email') <strong style="color:red;">{{ $message }}</strong> @enderror
+                </label>
                 <input type="text" class="form-control" id="email" name="email" required value="{{ $author->email }}">
             </div>
             <br>

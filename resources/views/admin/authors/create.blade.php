@@ -14,11 +14,17 @@
     <form method="post" action="{{ route('admin.authors.store') }}">
         @csrf
         <div class="form-group">
-            <label for="name">Имя</label>
+            <label for="name">Имя
+                @error('name') <strong style="color:red;">{{ $message }}</strong> @enderror
+            </label>
             <input type="text" class="form-control" id="name" name="name" required>
-            <label for="lastname">Фамилия</label>
+            <label for="lastname">Фамилия
+                @error('lastname') <strong style="color:red;">{{ $message }}</strong> @enderror
+            </label>
             <input type="text" class="form-control" id="lastname" name="lastname" required >
-            <label for="email">Email</label>
+            <label for="email">Email
+                @error('email') <strong style="color:red;">{{ $message }}</strong> @enderror
+            </label>
             <input type="text" class="form-control" id="email" name="email" required >
         </div>
         <br>

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 
+use App\Http\Requests\Category\CreateRequest;
+use App\Http\Requests\Category\UpdateRequest;
 use App\Models\Author;
 use App\Models\Category;
 use App\Models\NewsSource;
@@ -48,13 +50,10 @@ class CategoriesController extends Controller
      * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        $request->validate([
-            'title' => ['required', 'string', 'min:5']
-        ]);
 
-        $data = $request->only(['title']);
+        $data = $request->validated();
 
         $created = Category::query()->create($data);
 
@@ -99,14 +98,14 @@ class CategoriesController extends Controller
      * @param Category $category
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Category $category)
+    public function update(UpdateRequest $request, Category $category)
     {
 
-        $request->validate([
-            'title' => ['required', 'string', 'min:5']
-        ]);
+//        $request->validate([
+//            'title' => ['required', 'string', 'min:5']
+//        ]);
 
-        $data = $request->only(['title']);
+        $data = $request->validated();
 
 
         $updated = $category->fill($data)->save();

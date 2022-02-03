@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\News\CreateRequest;
+use App\Http\Requests\News\UpdateRequest;
 use App\Models\Author;
 use App\Models\Category;
 use App\Models\News;
@@ -46,16 +48,12 @@ class NewsController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function store(Request $request)
+    public function store(CreateRequest $request)
     {
-        $request->validate([
-            'title' => ['required', 'string', 'min:5']
-        ]);
 
-        $data = $request->only(['title', 'author_id', 'source_id','status', 'description', 'img']);
+        $data = $request->validated();
 
         $created = News::query()->create($data);
-
 
         if($created) {
 
@@ -129,14 +127,10 @@ class NewsController extends Controller
      * @param News $news
      * @return \Illuminate\Http\RedirectResponse|void
      */
-    public function update(Request $request, News $news)
+    public function update(UpdateRequest $request, News $news)
     {
 
-        $request->validate([
-            'title' => ['required', 'string', 'min:5']
-        ]);
-
-        $data = $request->only(['title', 'author_id', 'source_id','status', 'description', 'img']);
+        $data = $request->validated();
 
         $updated = $news->fill($data)->save();
 

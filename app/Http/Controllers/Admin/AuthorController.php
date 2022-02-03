@@ -3,6 +3,8 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Http\Requests\Author\CreateRequest;
+use App\Http\Requests\Author\UpdateRequest;
 use App\Models\Author;
 use Illuminate\Http\Request;
 
@@ -89,16 +91,10 @@ class AuthorController extends Controller
      * @param Author $author
      * @return \Illuminate\Http\RedirectResponse
      */
-    public function update(Request $request, Author $author)
+    public function update(UpdateRequest $request, Author $author)
     {
-        $request->validate([
-            'name' => ['required', 'string', 'min:2'],
-            'lastname' => ['required', 'string', 'min:2'],
-            'email' => ['required', 'string', 'min:5'],
-        ]);
 
-        $data = $request->only(['name', 'lastname', 'email']);
-
+        $data = $request->validated();
 
         $updated = $author->fill($data)->save();
 

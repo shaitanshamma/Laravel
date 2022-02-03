@@ -10,12 +10,14 @@
     </div>
 @endsection
 @section('content')
-    @include('inc.message')
+{{--    @include('inc.message')--}}
     <div>
         <form method="post" action="{{ route('admin.categories.store') }}">
             @csrf
             <div class="form-group">
-                <label for="title">Наименование категории</label>
+                <label for="title">Наименование категории
+                    @error('title') <strong style="color:red;">{{ $message }}</strong> @enderror
+                </label>
                 <input type="text" class="form-control" id="title" name="title" required>
             </div>
             <br>

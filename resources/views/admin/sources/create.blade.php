@@ -10,13 +10,17 @@
     </div>
 @endsection
 @section('content')
-    @include('inc.message')
+{{--    @include('inc.message')--}}
     <form method="post" action="{{ route('admin.sources.store') }}">
         @csrf
         <div class="form-group">
-            <label for="title">Имя</label>
+            <label for="title">Имя
+                @error('title') <strong style="color:red;">{{ $message }}</strong> @enderror
+            </label>
             <input type="text" class="form-control" id="title" name="title" required>
-            <label for="path">Путь</label>
+            <label for="path">Путь
+                @error('path') <strong style="color:red;">{{ $message }}</strong> @enderror
+            </label>
             <input type="text" class="form-control" id="path" name="path" required>
         </div>
         <br>
