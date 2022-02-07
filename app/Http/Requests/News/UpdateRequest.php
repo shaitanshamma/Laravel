@@ -27,7 +27,7 @@ class UpdateRequest extends FormRequest
             'title' => ['required', 'string', 'min:2'],
             'description' => ['required', 'string'],
             'img' => ['required', 'url'],
-            'category_id' => ['required', 'int'],
+            'category_id' => ['required', 'array'],
             'source_id' => ['required', 'int'],
             'author_id' => ['required', 'int'],
             'status' => ['required', 'string'],
