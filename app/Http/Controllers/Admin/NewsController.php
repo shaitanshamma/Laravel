@@ -9,7 +9,7 @@ use App\Models\Author;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\NewsSource;
-use Illuminate\Http\Request;
+
 
 class NewsController extends Controller
 {
@@ -20,7 +20,9 @@ class NewsController extends Controller
      */
     public function index()
     {
-        $news = $news = News::with('author')->with('category')->with('newsSource')->get();
+        $news = $news = News::with('author')->with('category')
+//            ->with('newsSource')
+            ->paginate(8);
 
         return view('admin/news/index', ['news'=>$news]);
     }
@@ -89,7 +91,7 @@ class NewsController extends Controller
         $categories = Category::all();
         $authors = Author::all();
         $authorsSelect = Author::query()->where('id', $news->author_id)->first();
-        $sourceSelect = NewsSource::query()->where('id', $news->source_id)->first();
+//        $sourceSelect = NewsSource::query()->where('id', $news->source_id)->first();
 
         $sources = NewsSource::all();
 
@@ -116,7 +118,7 @@ class NewsController extends Controller
             'sources'=>$sources,
             'selectCategories' => $selectCategories,
             'authorsSelect'=>$authorsSelect,
-            'sourceSelect'=>$sourceSelect,
+//            'sourceSelect'=>$sourceSelect,
         ]);
     }
 

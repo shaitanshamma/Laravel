@@ -39,16 +39,20 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="categories">Выбрать источник
-                    @error('source_id') <strong style="color:red;">{{ $message }}</strong> @enderror
+{{--                <label for="categories">Выбрать источник--}}
+{{--                    @error('source_id') <strong style="color:red;">{{ $message }}</strong> @enderror--}}
+{{--                </label>--}}
+{{--                <select class="form-control" name="source_id" id="source_id">--}}
+{{--                    @foreach($sources as $source)--}}
+{{--                        <option value="{{ $news->source_id }}"--}}
+{{--                                @if($source->id==$sourceSelect->id) selected @endif--}}
+{{--                        >{{ $sourceSelect->title }}</option>--}}
+{{--                    @endforeach--}}
+{{--                </select>--}}
+                <label for="title">Источник
+                    @error('title') <strong style="color:red;">{{ $message }}</strong> @enderror
                 </label>
-                <select class="form-control" name="source_id" id="source_id">
-                    @foreach($sources as $source)
-                        <option value="{{ $news->source_id }}"
-                                @if($source->id==$sourceSelect->id) selected @endif
-                        >{{ $sourceSelect->title }}</option>
-                    @endforeach
-                </select>
+                <input type="text" class="form-control" id="source" name="source" value="{{ $news->source }}">
             </div>
             <div class="form-group">
                 <label for="title">Наименование

@@ -10,7 +10,9 @@ class NewsController extends Controller
     public function news()
     {
 
-        $news = News::with('author')->with('category')->with('newsSource')->paginate(3);
+        $news = News::with('author')->with('category')
+//            ->with('newsSource')
+            ->paginate(9);
 
         return view('/news/index', ['newsList' => $news]);
     }

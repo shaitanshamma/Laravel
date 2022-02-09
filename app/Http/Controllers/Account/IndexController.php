@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Account;
 
 use App\Http\Controllers\Controller;
+use App\Models\News;
 use Illuminate\Http\Request;
 
 class IndexController extends Controller
@@ -15,6 +16,8 @@ class IndexController extends Controller
      */
     public function __invoke(Request $request)
     {
-        return view('account.index');
+        $newsList = News::query()->paginate(9);
+
+        return view('news.index',['newsList'=>$newsList]);
     }
 }

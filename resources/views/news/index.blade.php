@@ -43,8 +43,8 @@
                             </div>
                             <small class="text-muted">{{ $newsItem->created_at }}</small>
                         </div>
-                        <a href={{ $newsItem->newsSource->path }} type="button"
-                           class="link-dark">Источник: {{ $newsItem->newsSource->title }}
+                        <a href={{ $newsItem->source }} type="button"
+                           class="link-dark">Источник
                         </a>
                     </div>
                 </div>

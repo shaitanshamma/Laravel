@@ -41,7 +41,7 @@
                         @endforeach
                     </td>
                     <td>{{ $newsItem->status }}</td>
-                    <td>{{ $newsItem->newsSource->title }}</td>
+                    <td>{{ $newsItem->source }}</td>
                     <td>{{ $newsItem->author->name }} {{ $newsItem->author->lastname }}</td>
                     <td>{{ $newsItem->created_at }}</td>
                     <td>{{ $newsItem->updated_at }}</td>
@@ -55,6 +55,7 @@
             @endforelse
             </tbody>
         </table>
+        {{$news->links()}}
     </div>
 @endsection
 

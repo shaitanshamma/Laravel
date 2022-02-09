@@ -32,8 +32,8 @@ class News extends Model
         return $this->belongsToMany(Category::class, 'news_with_categories');
     }
 
-    public function newsSource()
-    {
-        return $this->belongsTo(NewsSource::class, 'source_id');
-    }
+//    public function newsSource()
+//    {
+//        return $this->belongsTo(NewsSource::class, 'source_id');
+//    }
 }

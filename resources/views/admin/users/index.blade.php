@@ -18,6 +18,7 @@
             <th scope="col">Id</th>
             <th scope="col">Name</th>
             <th scope="col">Email</th>
+            <th scope="col">Avatar</th>
             <th scope="col">Email confirmed</th>
             <th scope="col">Remember</th>
             <th scope="col">Last login</th>
@@ -33,6 +34,7 @@
                 <td>{{ $user->id }}</td>
                 <td>{{ $user->name }}</td>
                 <td>{{ $user->email }}</td>
+                <td>{{ $user->avatar }}</td>
                 <td>{{ $user->email_verified_at }}</td>
                 <td>{{ $user->remember_token }}</td>
                 <td>{{ $user->last_login_at }}</td>

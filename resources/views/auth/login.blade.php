@@ -8,9 +8,9 @@
                 <div class="card-header">{{ __('Вход') }}</div>
 
                 <div class="card-body">
+                    <a href="{{ route('auth.redirect', ['network' => 'vkontakte']) }}">Войти через VK</a>
                     <form method="POST" action="{{ route('login') }}">
                         @csrf
-
                         <div class="row mb-3">
                             <label for="email" class="col-md-4 col-form-label text-md-end">{{ __('Email адрес') }}</label>
 
