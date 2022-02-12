@@ -9,6 +9,7 @@ use App\Models\Author;
 use App\Models\Category;
 use App\Models\News;
 use App\Models\NewsSource;
+use App\Services\UploadService;
 
 
 class NewsController extends Controller
@@ -24,7 +25,7 @@ class NewsController extends Controller
 //            ->with('newsSource')
             ->paginate(8);
 
-        return view('admin/news/index', ['news'=>$news]);
+        return view('admin/news/index', ['news' => $news]);
     }
 
     /**
@@ -37,17 +38,17 @@ class NewsController extends Controller
         $categories = Category::all();
         $authors = Author::all();
         $sources = NewsSource::all();
-        return view('admin/news/create',[
-            'categories'=>$categories,
-            'authors'=>$authors,
-            'sources'=>$sources
+        return view('admin/news/create', [
+            'categories' => $categories,
+            'authors' => $authors,
+            'sources' => $sources
         ]);
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse
      */
     public function store(CreateRequest $request)
@@ -57,7 +58,7 @@ class NewsController extends Controller
 
         $created = News::query()->create($data);
 
-        if($created) {
+        if ($created) {
 
             $created->category()->attach($request->input('categories'));
 
@@ -72,7 +73,7 @@ class NewsController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
+     * @param int $id
      * @return \Illuminate\Http\Response
      */
     public function show($id)
@@ -83,7 +84,7 @@ class NewsController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  News  $news
+     * @param News $news
      * @return \Illuminate\Contracts\Foundation\Application|\Illuminate\Contracts\View\Factory|\Illuminate\Contracts\View\View|\Illuminate\Http\Response
      */
     public function edit(News $news)
@@ -95,8 +96,8 @@ class NewsController extends Controller
 
         $sources = NewsSource::all();
 
-        foreach ($authors as $item){
-            if ($item->id == $authorsSelect[0]){
+        foreach ($authors as $item) {
+            if ($item->id == $authorsSelect[0]) {
                 var_dump(true);
             }
         }
@@ -111,13 +112,13 @@ class NewsController extends Controller
 //            ->get()
 //            ->map(fn($item) => $item->category_id)->toArray();
 
-        return view('admin.news.edit',[
-            'news'=>$news,
-            'categories'=>$categories,
-            'authors'=>$authors,
-            'sources'=>$sources,
+        return view('admin.news.edit', [
+            'news' => $news,
+            'categories' => $categories,
+            'authors' => $authors,
+            'sources' => $sources,
             'selectCategories' => $selectCategories,
-            'authorsSelect'=>$authorsSelect,
+            'authorsSelect' => $authorsSelect,
 //            'sourceSelect'=>$sourceSelect,
         ]);
     }
@@ -125,8 +126,9 @@ class NewsController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param \Illuminate\Http\Request $request
+     * @param UpdateRequest $request
      * @param News $news
+     * @param UploadService $service
      * @return \Illuminate\Http\RedirectResponse|void
      */
     public function update(UpdateRequest $request, News $news)
@@ -134,20 +136,17 @@ class NewsController extends Controller
 
         $data = $request->validated();
 
+        if ($request->hasFile('img')) {
+            $data['img'] = app(UploadService::class)->saveUploadedFile($request->file('img'));
+        }
+
         $updated = $news->fill($data)->save();
 
-        if($updated) {
-            \DB::table('news_with_categories')
-                ->where('news_id', $news->id)
-                ->delete();
+        if ($updated) {
 
-            foreach($request->input('categories') as $category) {
-                \DB::table('news_with_categories')
-                    ->insert([
-                        'category_id' => intval($category),
-                        'news_id' => $news->id
-                    ]);
-            }
+            $news->category()->detach();
+
+            $news->category()->attach($request->input('categories'));
 
             return redirect()->route('admin.news.index')
                 ->with('success', 'Запись успешно обновлена');
@@ -166,10 +165,10 @@ class NewsController extends Controller
      */
     public function destroy(News $news)
     {
-        try{
+        try {
             $news->delete();
             return response()->json('ok');
-        }catch(\Exception $e) {
+        } catch (\Exception $e) {
             \Log::error("Error delete news item");
         }
     }

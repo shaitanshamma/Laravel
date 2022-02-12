@@ -6,10 +6,9 @@ use App\Contracts\Parser;
 use App\Contracts\Social;
 use App\Services\NewsParserService;
 use App\Services\SocialService;
-use Contracts\SocialAuth;
 use Illuminate\Pagination\Paginator;
 use Illuminate\Support\ServiceProvider;
-use Services\SocialAuthService;
+use App\Services\UploadService;
 
 
 class AppServiceProvider extends ServiceProvider
@@ -24,6 +23,9 @@ class AppServiceProvider extends ServiceProvider
         $this->app->bind(Parser::class, NewsParserService::class);
 
         $this->app->bind(Social::class, SocialService::class);
+
+        $this->app->bind(UploadService::class);
+
     }
 
     /**

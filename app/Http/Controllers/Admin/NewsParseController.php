@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Jobs\NewsParsing;
 use App\Models\Category;
 use App\Models\News;
 use App\Services\NewsParserService;
@@ -13,33 +14,26 @@ class NewsParseController extends Controller
 
     public function parseNews(Request $request, NewsParserService $parserService)
     {
-        $link = $request->only('path');
+        $links = [
+            'https://news.yandex.ru/auto.rss',
+            'https://news.yandex.ru/auto_racing.rss',
+            'https://news.yandex.ru/army.rss',
+            'https://news.yandex.ru/gadgets.rss',
+            'https://news.yandex.ru/index.rss',
+            'https://news.yandex.ru/martial_arts.rss',
+            'https://news.yandex.ru/communal.rss',
+            'https://news.yandex.ru/health.rss',
+            'https://news.yandex.ru/games.rss',
+            'https://news.yandex.ru/internet.rss',
+        ];
 
-        $items = $parserService->setLink($link['path'])->parse();
-
-        $category = Category::query()->where('title', $items['title'])->first();
-
-
-        if (!$category){
-            $category = new Category();
-            $category->title = $items['title'];
-            $category->save();
+        foreach($links as $link) {
+            dispatch(new NewsParsing($link));
         }
 
-        foreach ($items['news'] as $item){
-
-            $news = new News();
-
-            $news->title = $item['title'];
-            $news->source = $item['link'];
-            $news->description = $item['description'];
-            $news->created_at = $item['pubDate'];
-            $news->save();
-            $news->category()->attach($category->id);
-
-        }
         return redirect()->route('admin.news.index')
             ->with('success', 'Парсинг успешно завершен');
+
     }
 
 }

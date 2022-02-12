@@ -10,14 +10,11 @@
 @endsection
 @section('content')
     <div>
-{{--        @include('inc.message')--}}
-        <form method="post" action="{{ route('admin.news.update', ['news'=>$news]) }}">
+        <form method="post" action="{{ route('admin.news.update', ['news' => $news]) }}" enctype="multipart/form-data">
             @csrf
             @method('put')
             <div class="form-group">
-                <label for="categories">Выбрать категории
-                    @error('category_id') <strong style="color:red;">{{ $message }}</strong> @enderror
-                </label>
+                <label for="categories">Выбрать категории</label>
                 <select class="form-control" name="categories[]" id="categories" multiple>
                     @foreach($categories as $category)
                         <option value="{{ $category->id }}"
@@ -27,7 +24,7 @@
                 </select>
             </div>
             <div class="form-group">
-                <label for="categories">Выбрать автора
+                <label for="author_id">Выбрать автора
                     @error('author_id') <strong style="color:red;">{{ $message }}</strong> @enderror
                 </label>
                 <select class="form-control" name="author_id" id="author_id">
@@ -39,18 +36,8 @@
                 </select>
             </div>
             <div class="form-group">
-{{--                <label for="categories">Выбрать источник--}}
-{{--                    @error('source_id') <strong style="color:red;">{{ $message }}</strong> @enderror--}}
-{{--                </label>--}}
-{{--                <select class="form-control" name="source_id" id="source_id">--}}
-{{--                    @foreach($sources as $source)--}}
-{{--                        <option value="{{ $news->source_id }}"--}}
-{{--                                @if($source->id==$sourceSelect->id) selected @endif--}}
-{{--                        >{{ $sourceSelect->title }}</option>--}}
-{{--                    @endforeach--}}
-{{--                </select>--}}
-                <label for="title">Источник
-                    @error('title') <strong style="color:red;">{{ $message }}</strong> @enderror
+                <label for="source">Источник
+                    @error('source') <strong style="color:red;">{{ $message }}</strong> @enderror
                 </label>
                 <input type="text" class="form-control" id="source" name="source" value="{{ $news->source }}">
             </div>
@@ -76,13 +63,23 @@
                 <textarea class="form-control" name="description" id="description">{{ $news->description }}</textarea>
             </div>
             <div class="form-group">
-                <label for="img">Изображение
-                    @error('img') <strong style="color:red;">{{ $message }}</strong> @enderror
-                </label>
-                <input type="text" class="form-control" id="img" name="img" value="{{ $news->img }}">
+                <label for="img">Изображение</label>
+                <input type="file" class="form-control" id="img" name="img">
             </div>
             <br>
             <button type="submit" class="btn btn-success" style="float: right;">Сохранить</button>
         </form>
     </div>
 @endsection
+
+@push('js')
+
+    <script>
+        ClassicEditor
+            .create( document.querySelector( '#description' ) )
+            .catch( error => {
+                console.error( error );
+            } );
+    </script>
+
+@endpush

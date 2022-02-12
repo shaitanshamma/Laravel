@@ -26,9 +26,8 @@ class UpdateRequest extends FormRequest
         return [
             'title' => ['required', 'string', 'min:2'],
             'description' => ['required', 'string'],
-            'img' => ['required', 'url'],
-            'category_id' => ['required', 'array'],
-            'source_id' => ['required', 'int'],
+            'img' => ['nullable', 'file', 'image', 'mimes:jpg,png'],
+            'source' => ['required', 'string'],
             'author_id' => ['required', 'int'],
             'status' => ['required', 'string'],
         ];
@@ -48,7 +47,7 @@ class UpdateRequest extends FormRequest
             'description' => 'описание новости',
             'img' => 'путь до изображения',
             'category_id' => 'категории',
-            'source_id' => 'источника новости',
+            'source' => 'источника новости',
             'author_id' => 'автора новости',
             'status' => 'статус новости',
         ];
