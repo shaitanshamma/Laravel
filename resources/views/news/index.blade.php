@@ -15,31 +15,41 @@
 
             <div class="col">
                 <div class="card shadow-sm">
-                    <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
-                         xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
-                         preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
-                        <rect width="100%" height="100%" fill="#55595c"/>
-                        <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
-                    </svg>
+                    @if($newsItem->img)
+                        <img src="{{ Storage::disk('public')->url($newsItem->img) }}" alt="img">
+                    @else
+                        <svg class="bd-placeholder-img card-img-top" width="100%" height="225"
+                             xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail"
+                             preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title>
+                            <rect width="100%" height="100%" fill="#55595c"/>
+                            <text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text>
+                        </svg>
 
+                    @endif
                     <div class="card-body">
                         <div class="card-header">
                             <strong>
-                                <a href="{{ route('news.show', ['id' => $newsItem['id']]) }}">
-                                    {{ $newsItem['title'] }}
+                                <a href="{{ route('news.show', ['id' => $newsItem->id]) }}">
+                                    {{ $newsItem->title }}
                                 </a>
                             </strong>
                         </div>
-                        <p class="card-text">{!! $newsItem['description'] !!}</p>
-                        <div>Автор: {{ $newsItem['author'] }}</div>
+                        <p class="card-text">{!! $newsItem->description !!}</p>
+                        <div>Автор: {{ $newsItem->author->lastname }}</div>
+                        @foreach($newsItem->category as $category)
+                            <small class="text-muted">{{ $category->title }}</small>
+                        @endforeach
                         <div class="d-flex justify-content-between align-items-center">
                             <div class="btn-group">
-                                <button type="button" class="btn btn-sm btn-outline-secondary">Смотреть подробнее
-                                </button>
+                                <a href={{ route('news.show', ['id' => $newsItem->id]) }} type="button"
+                                   class="btn btn-sm btn-outline-secondary">Смотреть подробнее
+                                </a>
                             </div>
-
-                            <small class="text-muted">{{ now('Europe/Moscow') }}</small>
+                            <small class="text-muted">{{ $newsItem->created_at }}</small>
                         </div>
+                        <a href={{ $newsItem->source }} type="button"
+                           class="link-dark">Источник
+                        </a>
                     </div>
                 </div>
             </div>
@@ -47,4 +57,5 @@
             <h1>Новостей нет</h1>
         @endforelse
     </div>
+    {{ $newsList->links() }}
 @endsection

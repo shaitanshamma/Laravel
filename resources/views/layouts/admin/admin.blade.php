@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>@section('title') - by shamma @show</title>
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <!-- Bootstrap core CSS -->
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
@@ -33,11 +34,10 @@
 
         <main class="col-md-9 ms-sm-auto col-lg-10 px-md-4">
             <div class="d-flex justify-content-between flex-wrap flex-md-nowrap align-items-center pt-3 pb-2 mb-3 border-bottom">
-                @yield('header')
+            @yield('header')
             </div>
 
             @yield('content')
-            <x-alert type="success" message="Алярма"></x-alert>
         </main>
     </div>
 </div>
@@ -45,6 +45,7 @@
 <script src="{{ asset('js/bootstrap.bundle.min.js') }}"></script>
 <script src="https://cdn.jsdelivr.net/npm/feather-icons@4.28.0/dist/feather.min.js" integrity="sha384-uO3SXW5IuS1ZpFPKugNNWqTZRRglnUJK6UAZ/gxOX80nxEkN9NcGZTftn6RzhGWE" crossorigin="anonymous"></script>
 <script src="{{ asset('js/dashboard.js') }}"></script>
+<script src="https://cdn.ckeditor.com/ckeditor5/32.0.0/classic/ckeditor.js"></script>
 
 @stack('js')
 

@@ -2,21 +2,39 @@
     <div class="position-sticky pt-3">
         <ul class="nav flex-column">
             <li class="nav-item">
-                <a class="nav-link" aria-current="page" href="#">
+                <a class="nav-link @if(request()->routeIs('admin.index')) active @endif" aria-current="page" href="{{ route('admin.index') }}">
                     <span data-feather="home"></span>
                     Главная
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
+                <a class="nav-link @if(request()->routeIs('admin.news.*')) active @endif" href="{{ route('admin.news.index') }}">
                     <span data-feather="layers"></span>
                     Новости
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">
-                    <span data-feather="file"></span>
+                <a class="nav-link @if(request()->routeIs('admin.categories.*')) active @endif" href="{{ route('admin.categories.index') }}">
+                    <span data-feather="list"></span>
                     Категории
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @if(request()->routeIs('admin.authors.*')) active @endif" href="{{ route('admin.authors.index') }}">
+                    <span data-feather="user"></span>
+                    Авторы
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @if(request()->routeIs('admin.sources.*')) active @endif" href="{{ route('admin.sources.index') }}">
+                    <span data-feather="upload"></span>
+                    Источники
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link @if(request()->routeIs('admin.users.*')) active @endif" href="{{ route('admin.users.index') }}">
+                    <span data-feather="user"></span>
+                    Пользователи
                 </a>
             </li>
 
@@ -24,3 +42,4 @@
 
     </div>
 </nav>
+

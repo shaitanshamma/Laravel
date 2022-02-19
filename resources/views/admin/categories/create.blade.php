@@ -1,4 +1,4 @@
-@extends('layouts.admin')
+@extends('layouts.admin.admin')
 @section('title') Добавить категорию @endsection
 @section('header')
     <h1 class="h2">Добавить категорию</h1>
@@ -10,15 +10,15 @@
     </div>
 @endsection
 @section('content')
+{{--    @include('inc.message')--}}
     <div>
-        <form method="post">
+        <form method="post" action="{{ route('admin.categories.store') }}">
+            @csrf
             <div class="form-group">
-                <label for="title">Наименование категории</label>
+                <label for="title">Наименование категории
+                    @error('title') <strong style="color:red;">{{ $message }}</strong> @enderror
+                </label>
                 <input type="text" class="form-control" id="title" name="title" required>
-            </div>
-            <div class="form-group">
-                <label for="description">Описание категории</label>
-                <textarea class="form-control" name="description" id="description"></textarea>
             </div>
             <br>
             <button type="submit" class="btn btn-success" style="float: right;">Сохранить</button>

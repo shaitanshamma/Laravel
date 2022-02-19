@@ -17,5 +17,13 @@ class ExampleTest extends TestCase
         $response = $this->get('/');
 
         $response->assertStatus(200);
+
+        $response->assertOk();
+
+       $view = $this->view('welcome');
+
+       $view->assertSee('Laravel has wonderful');
+
+       $response->assertSeeText(" На этом сайте вы найдете много новостей", $escaped = true);
     }
 }
